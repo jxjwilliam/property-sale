@@ -10,7 +10,7 @@ interface FilterBarProps {
 
 export function FilterBar({ groups, activeKey, onFilterChange }: FilterBarProps) {
   return (
-    <div className="flex flex-wrap gap-2.5" aria-label="Gallery filters">
+    <div className="filter-bar-inner flex gap-2.5" aria-label="Gallery filters">
       {groups.map((group) => (
         <button
           key={group.key}

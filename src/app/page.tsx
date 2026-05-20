@@ -35,7 +35,7 @@ export default function Home() {
             ))}
           </ul>
 
-          <div className="mt-6 grid gap-3 sm:grid-cols-3">
+          <div className="hero-promos mt-6 grid gap-3">
             <a href="#inquiry-form" className="promo-card block hover:bg-muted/30">
               <p className="text-xs uppercase tracking-[0.2em] text-primary font-bold mb-1">
                 Request a showing
@@ -76,29 +76,31 @@ export default function Home() {
         <Gallery groups={galleryGroups} />
       </section>
 
-      <section className="mt-10 space-y-6">
-        <div className="grid gap-6 lg:grid-cols-[1.1fr_0.9fr] lg:items-stretch">
+      <section className="inquiry-section mt-10 space-y-6">
+        <div className="inquiry-layout grid gap-6 lg:grid-cols-[1.1fr_0.9fr] lg:items-stretch">
           <div className="map-column">
             <iframe
               title="Google Map for the property"
               src={googleMapsEmbedUrl}
               loading="lazy"
               referrerPolicy="no-referrer-when-downgrade"
-              className="h-136 w-full border-0 sm:h-152 lg:h-176"
+              className="map-embed w-full border-0"
               allowFullScreen
             />
             <PropertyMapPanel />
           </div>
 
-          <div className="flex h-full min-h-0 flex-col rounded-2xl border border-line bg-card shadow-lg p-6 sm:p-8">
-            <p className="mb-4 text-xs uppercase tracking-[0.24em] font-bold text-accent">
-              Request a showing
-            </p>
-            <h3 className="font-serif text-2xl tracking-tight text-foreground m-0 mb-6">
-              Send a showing request
-            </h3>
-            <InquiryForm id="inquiry-form" />
-            <ContactBlock />
+          <div className="inquiry-card flex h-full min-h-0 flex-col rounded-2xl border border-line bg-card shadow-lg">
+            <div className="inquiry-card-body">
+              <p className="mb-4 text-xs uppercase tracking-[0.24em] font-bold text-accent">
+                Request a showing
+              </p>
+              <h3 className="inquiry-card-title font-serif tracking-tight text-foreground m-0 mb-6">
+                Send a showing request
+              </h3>
+              <InquiryForm id="inquiry-form" />
+              <ContactBlock />
+            </div>
           </div>
         </div>
 

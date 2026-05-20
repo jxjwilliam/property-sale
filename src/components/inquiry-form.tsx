@@ -79,7 +79,7 @@ export function InquiryForm({ id }: InquiryFormProps) {
 
   return (
     <form id={id} onSubmit={handleSubmit} className="space-y-5">
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <div className="inquiry-form-grid grid grid-cols-1 gap-4">
         <div>
           <label className={labelClass}>Name</label>
           <input
@@ -129,7 +129,7 @@ export function InquiryForm({ id }: InquiryFormProps) {
             </PopoverContent>
           </Popover>
         </div>
-        <div className="md:col-span-2">
+        <div className="inquiry-form-full">
           <label className={labelClass}>Preferred time (optional)</label>
           <select
             value={form.preferredTime}

@@ -45,9 +45,9 @@ export function HeroViewer({
   }, []);
 
   useEffect(() => {
-    if (!current) return;
+    if (!current?.url) return;
     showSwitch();
-  }, [current, showSwitch]);
+  }, [currentIndex, current?.url, showSwitch]);
 
   useEffect(() => {
     const handler = (e: KeyboardEvent) => {
@@ -108,6 +108,7 @@ export function HeroViewer({
           <div className="hero-placeholder">Photo unavailable</div>
         ) : (
           <img
+            key={current.url}
             src={current.url}
             alt={`${current.caption} from ${current.source}`}
             decoding="async"

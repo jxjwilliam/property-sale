@@ -49,7 +49,6 @@ export const galleryGroups: GalleryGroup[] = [
           "phone__Weixin Image_20260518190543_15_1.jpg",
           "phone__Weixin Image_20260518190547_16_1.jpg",
           "phone__Weixin Image_20260518190550_17_1.jpg",
-          "scraped-media__linkedin__image-001.jpg",
           "scraped-media__matterport__image-001.jpg",
           "scraped-media__realtor-ca__image-001.jpg",
           "scraped-media__realtor-ca__image-002.jpg",
@@ -64,7 +63,6 @@ export const galleryGroups: GalleryGroup[] = [
           "scraped-media__realtor-ca__image-023.jpg",
           "scraped-media__realtor-ca__image-024.jpg",
           "scraped-media__realtor-ca__image-025.jpg",
-          "scraped-media__realtor-ca__image-026.jpg",
           "scraped-media__realtor-ca__image-027.jpg",
           "scraped-media__realtor-ca__image-028.jpg",
           "scraped-media__realtor-ca__image-029.jpg",
@@ -98,7 +96,6 @@ export const galleryGroups: GalleryGroup[] = [
           "scraped-media__rew-ca__image-010.jpeg",
           "scraped-media__rew-ca__image-011.jpeg",
           "scraped-media__rew-ca__image-012.jpeg",
-          "scraped-media__rew-ca__image-013.jpeg",
           "scraped-media__rew-ca__image-014.jpeg",
           "scraped-media__rew-ca__image-015.jpeg",
           "scraped-media__rew-ca__image-016.jpeg",
@@ -160,7 +157,6 @@ export const galleryGroups: GalleryGroup[] = [
           "scraped-media__realtor-ca__image-023.jpg",
           "scraped-media__realtor-ca__image-024.jpg",
           "scraped-media__realtor-ca__image-025.jpg",
-          "scraped-media__realtor-ca__image-026.jpg",
           "scraped-media__realtor-ca__image-027.jpg",
           "scraped-media__realtor-ca__image-028.jpg",
           "scraped-media__realtor-ca__image-029.jpg",
@@ -201,7 +197,6 @@ export const galleryGroups: GalleryGroup[] = [
           "scraped-media__rew-ca__image-010.jpeg",
           "scraped-media__rew-ca__image-011.jpeg",
           "scraped-media__rew-ca__image-012.jpeg",
-          "scraped-media__rew-ca__image-013.jpeg",
           "scraped-media__rew-ca__image-014.jpeg",
           "scraped-media__rew-ca__image-015.jpeg",
           "scraped-media__rew-ca__image-016.jpeg",
@@ -223,14 +218,6 @@ export const galleryGroups: GalleryGroup[] = [
           "scraped-media__rew-ca__image-032.jpeg",
           "scraped-media__rew-ca__image-033.jpeg",
           "scraped-media__rew-ca__image-034.jpeg"
-    ],
-  },
-  {
-    key: "linkedin",
-    label: "LinkedIn",
-    description: "Social listing photos",
-    files: [
-          "scraped-media__linkedin__image-001.jpg"
     ],
   }
 ];

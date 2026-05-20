@@ -1,18 +1,21 @@
 # 4sell — Surrey Condo Sale Gallery
 
-For-sale listing site for **Unit 808, 13573 98A Ave, Surrey, BC** (MLS® **R3109998**, **$649,900**). Cinematic photo gallery, showing-request form, map, and dual contact (owner + listing agents).
+For-sale listing site for **Unit 808, 13573 98A Ave, Surrey, BC** (MLS® **R3109998**, **$649,900**). Cinematic photo gallery, showing-request form, map with listing links, buyer FAQ, and listing-agent contacts.
 
 **Live stack:** Next.js 16 · React 19 · Tailwind v4 · shadcn/ui · [tweakcn Elegant Luxury (dark)](https://tweakcn.com/editor/theme) · Cloudflare R2 · Vercel
 
 ## Features
 
-- Hero viewer with autoplay, keyboard navigation, and source filters (All, Phone, Matterport, Realtor.ca, REW.ca, …)
-- **76** listing photos from Cloudflare R2
+- Hero viewer with autoplay, keyboard navigation, and source filters (**All**, **Phone**, **Matterport**, **Realtor.ca**, **REW.ca**)
+- **73** listing photos from Cloudflare R2 (manifest has 76; three files are not on R2 yet — see [Gallery sync](#gallery-sync))
 - Sale-focused copy, stats (price, beds/baths, sq ft, MLS)
 - Showing request form (email via Gmail SMTP)
-- Owner + Heller Murch agent contacts with Realtor.ca / SellVanHomes links
+- Heller Murch listing agents + team contacts
+- Map panel with address and Realtor.ca / SellVanHomes links
+- Buyer FAQ (BC sale context)
 - Matterport virtual tour link
 - Google Maps embed
+- Mobile layout (stacked promos, scrollable filters, shorter map, hero `object-fit: contain`)
 
 ## Quick start
 
@@ -44,21 +47,38 @@ Open [http://localhost:3000](http://localhost:3000).
 | `npm run build` | Production build |
 | `npm run start` | Run production build locally |
 | `npm run lint` | ESLint |
-| `npm run sync-gallery` | Regenerate `src/config/gallery.ts` from `../rental/docs/manifest.json` |
+| `npm run sync-gallery` | Regenerate `src/config/gallery.ts` from manifest, skipping files missing on R2 |
 
-After adding or renaming images in R2, update the manifest (rental pipeline) and run `npm run sync-gallery`.
+## Gallery sync
+
+`npm run sync-gallery` reads `../rental/docs/manifest.json`, **HEAD-checks each file** against `NEXT_PUBLIC_R2_PUBLIC_URL` (from `.env.local` or the environment), and rewrites `galleryGroups` in `src/config/gallery.ts`. Files that return 404 are omitted and listed in the console.
+
+After adding images to R2:
+
+1. Update the rental manifest if filenames changed.
+2. Run `npm run sync-gallery`.
+3. Commit `src/config/gallery.ts` if the gallery changed.
+
+**Currently skipped on R2** (in manifest but not uploaded):
+
+- `scraped-media__linkedin__image-001.jpg`
+- `scraped-media__realtor-ca__image-026.jpg`
+- `scraped-media__rew-ca__image-013.jpeg`
+
+Upload those to the bucket root with the same names, then run `sync-gallery` again to restore them (and the LinkedIn filter if applicable).
 
 ## Project layout
 
 ```
 src/
 ├── app/              # layout, page, globals.css, inquiry API
-├── components/       # gallery, hero, filmstrip, inquiry form, contact block
+├── components/       # gallery, hero, filmstrip, inquiry, FAQ, map, contacts
 └── config/
     ├── listing.ts    # Price, MLS, contacts, external URLs
-    └── gallery.ts    # Image groups + R2 URLs (generated)
+    ├── gallery.ts    # Image groups + R2 URLs (generated)
+    └── faq.ts        # Buyer FAQ entries
 scripts/
-└── sync-gallery.mjs
+└── sync-gallery.mjs  # Manifest → gallery.ts (with R2 verification)
 docs/superpowers/     # Design spec + implementation plan
 ```
 
@@ -88,5 +108,9 @@ curl -sI "https://pub-XXXX.r2.dev/phone__Weixin%20Image_20260518190536_13_1.jpg"
 ```
 
 Expected: `HTTP/1.1 200 OK`.
+
+**Broken thumbnails in the gallery** — Usually a manifest entry with no object on R2. Run `npm run sync-gallery` to drop missing files, or upload the file to R2 and sync again.
+
+**Hero looks black on mobile** — Fixed by stabilizing hero image transition deps; ensure you are on a build that includes the `hero-viewer` update.
 
 **Inquiry email not sent** — Verify `SMTP_EMAIL` / `SMTP_PASSWORD` on Vercel. Without SMTP, the API logs the payload and still returns success (dev only).
