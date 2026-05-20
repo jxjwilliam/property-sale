@@ -4,7 +4,9 @@ import { galleryGroups, statsData } from "@/config/gallery";
 import { listing } from "@/config/listing";
 import { Gallery } from "@/components/gallery";
 import { ContactBlock } from "@/components/contact-block";
+import { FaqSection } from "@/components/faq-section";
 import { InquiryForm } from "@/components/inquiry-form";
+import { PropertyMapPanel } from "@/components/property-map-panel";
 
 const GOOGLE_MAPS_KEY = process.env.NEXT_PUBLIC_GOOGLE_API_KEY;
 
@@ -75,8 +77,8 @@ export default function Home() {
       </section>
 
       <section className="mt-10 space-y-6">
-        <div className="grid gap-6 lg:grid-cols-[1.1fr_0.9fr]">
-          <div className="overflow-hidden rounded-2xl border border-line bg-card shadow-lg">
+        <div className="grid gap-6 lg:grid-cols-[1.1fr_0.9fr] lg:items-stretch">
+          <div className="map-column">
             <iframe
               title="Google Map for the property"
               src={googleMapsEmbedUrl}
@@ -85,9 +87,10 @@ export default function Home() {
               className="h-136 w-full border-0 sm:h-152 lg:h-176"
               allowFullScreen
             />
+            <PropertyMapPanel />
           </div>
 
-          <div className="rounded-2xl border border-line bg-card shadow-lg p-6 sm:p-8">
+          <div className="flex h-full min-h-0 flex-col rounded-2xl border border-line bg-card shadow-lg p-6 sm:p-8">
             <p className="mb-4 text-xs uppercase tracking-[0.24em] font-bold text-accent">
               Request a showing
             </p>
@@ -98,6 +101,8 @@ export default function Home() {
             <ContactBlock />
           </div>
         </div>
+
+        <FaqSection />
       </section>
     </main>
   );
