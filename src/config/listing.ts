@@ -1,0 +1,56 @@
+export const listing = {
+  unit: "808",
+  address: "808 – 13573 98A Ave, Surrey, BC V3T 0X1",
+  addressShort: "13573 98A Ave, Surrey, BC",
+  neighbourhood: "Whalley · Surrey City Centre",
+  building: "Holland Park by Century City",
+  price: "$649,900",
+  mls: "R3109998",
+  beds: 2,
+  baths: 2,
+  sqft: 829,
+  yearBuilt: 2025,
+  strataFee: "$594/mo",
+  parking: "1 secured underground stall",
+  propertyType: "Apartment / condo (corner unit)",
+  status: "Active",
+  lede: [
+    "Welcome to Holland Park by Century City—a brand-new 2025 corner residence in the heart of Surrey City Centre. This 2 bed, 2 bath home offers 829 sq ft of bright, open living with floor-to-ceiling windows and views toward the mountains and Holland Park.",
+    "Never lived in, with modern finishings, air conditioning, in-suite laundry, and one secured underground parking stall. You're one block from King George SkyTrain, directly across from Surrey City Centre Mall, and minutes from T&T, Holland Park, SFU Surrey, and KPU.",
+  ],
+  highlights: [
+    "Corner unit · brand new · never occupied",
+    "Floor-to-ceiling windows · mountain & park outlook",
+    "A/C · in-suite washer/dryer · balcony",
+    "Fitness centre · concierge · bike room · guest amenities",
+    "1 block to SkyTrain · central Surrey downtown",
+  ],
+  matterportUrl: "https://my.matterport.com/show/?m=6Wyg31LF3a2",
+  realtorCaUrl:
+    "https://www.realtor.ca/real-estate/29590014/808-13573-98a-avenue-surrey",
+  sellVanHomesUrl:
+    "https://www.sellvanhomes.ca/listing/r3109998-13573-98a-avenue-808-surrey-bc-v3t-4a4/",
+  primaryAgent: {
+    name: "Carter Lozinski",
+    title: "Listing agent",
+    brokerage: "Heller Murch Realty",
+    phone: "(604) 209-3826",
+    phoneTel: "+16042093826",
+    email: "carter@sellvanhomes.ca",
+  },
+  owner: {
+    label: "Property owner",
+    phone: "236-992-3846",
+    phoneTel: "+12369923846",
+    email: "jxjwilliam@gmail.com",
+  },
+  agents: [
+    {
+      name: "Frederick Trudeau",
+      brokerage: "Heller Murch Realty",
+      phone: "(778) 877-8807",
+      phoneTel: "+17788778807",
+      email: "fred@sellvanhomes.ca",
+    },
+  ],
+} as const;
