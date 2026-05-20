@@ -26,13 +26,10 @@ export function HeroViewer({
 }: HeroViewerProps) {
   const frameRef = useRef<HTMLDivElement>(null);
   const switchingRef = useRef(false);
-  const [broken, setBroken] = useState(false);
+  const [brokenUrl, setBrokenUrl] = useState<string | null>(null);
 
   const current = items[currentIndex];
-
-  useEffect(() => {
-    setBroken(false);
-  }, [currentIndex, current?.url]);
+  const isBroken = Boolean(current?.url && brokenUrl === current.url);
 
   const showSwitch = useCallback(() => {
     if (switchingRef.current) return;
@@ -104,7 +101,7 @@ export function HeroViewer({
   return (
     <div className="hero-frame">
       <div className="hero-frame-inner" ref={frameRef}>
-        {broken ? (
+        {isBroken ? (
           <div className="hero-placeholder">Photo unavailable</div>
         ) : (
           <img
@@ -113,7 +110,7 @@ export function HeroViewer({
             alt={`${current.caption} from ${current.source}`}
             decoding="async"
             className="hero-image"
-            onError={() => setBroken(true)}
+            onError={() => setBrokenUrl(current.url)}
           />
         )}
         <div className="hero-overlay">

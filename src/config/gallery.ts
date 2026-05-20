@@ -2,21 +2,6 @@ import { listing } from "./listing";
 
 const R2_BASE = process.env.NEXT_PUBLIC_R2_PUBLIC_URL ?? "";
 
-
-const phoneFiles = [
-  "phone__Weixin Image_20260518190536_13_1.jpg",
-  "phone__Weixin Image_20260518190540_14_1.jpg",
-  "phone__Weixin Image_20260518190543_15_1.jpg",
-  "phone__Weixin Image_20260518190547_16_1.jpg",
-  "phone__Weixin Image_20260518190550_17_1.jpg",
-];
-
-const realtorNumbers = [
-  1, 2, 11, 12, 13, 14,
-  ...Array.from({ length: 7 }, (_, i) => 19 + i),
-  ...Array.from({ length: 21 }, (_, i) => 27 + i),
-];
-
 export interface GalleryGroup {
   key: string;
   label: string;
