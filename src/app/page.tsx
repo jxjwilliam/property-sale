@@ -1,8 +1,9 @@
 "use client";
 
-import { galleryGroups, statsData } from "@/config/gallery";
+import { galleryGroups } from "@/config/gallery";
 import { listing } from "@/config/listing";
 import { Gallery } from "@/components/gallery";
+import { HeroPromos, HeroSalePill, HeroStats } from "@/components/hero-promo-cards";
 import { ContactBlock } from "@/components/contact-block";
 import { FaqSection } from "@/components/faq-section";
 import { InquiryForm } from "@/components/inquiry-form";
@@ -19,7 +20,7 @@ export default function Home() {
     <main className="shell">
       <section className="hero" aria-label="Property listing gallery">
         <div className="title-block">
-          <span className="sale-pill">For sale</span>
+          <HeroSalePill />
           <p className="kicker">
             {listing.neighbourhood} · MLS® {listing.mls} · Built {listing.yearBuilt}
           </p>
@@ -35,42 +36,8 @@ export default function Home() {
             ))}
           </ul>
 
-          <div className="hero-promos mt-6 grid gap-3">
-            <a href="#inquiry-form" className="promo-card block hover:bg-muted/30">
-              <p className="text-xs uppercase tracking-[0.2em] text-primary font-bold mb-1">
-                Request a showing
-              </p>
-              <p className="text-sm text-muted-foreground">Schedule a private walkthrough.</p>
-            </a>
-            <div className="promo-card">
-              <p className="text-xs uppercase tracking-[0.2em] text-primary font-bold mb-1">
-                {listing.price}
-              </p>
-              <p className="text-sm text-muted-foreground">
-                {listing.status} · Strata {listing.strataFee}
-              </p>
-            </div>
-            <a
-              href={listing.matterportUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="promo-card block hover:bg-muted/30"
-            >
-              <p className="text-xs uppercase tracking-[0.2em] text-accent font-bold mb-1">
-                Virtual tour
-              </p>
-              <p className="text-sm text-muted-foreground">Matterport 3D walkthrough</p>
-            </a>
-          </div>
-
-          <div className="stats">
-            {statsData.map((stat) => (
-              <div key={stat.label} className="stat">
-                <strong>{stat.value}</strong>
-                <span>{stat.label}</span>
-              </div>
-            ))}
-          </div>
+          <HeroPromos />
+          <HeroStats />
         </div>
 
         <Gallery groups={galleryGroups} />
