@@ -10,6 +10,8 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
+import { useLocale } from "@/i18n/provider";
+import { getDateFnsLocale } from "@/i18n/date-locale";
 
 interface FormFields {
   name: string;
@@ -34,6 +36,10 @@ interface InquiryFormProps {
 }
 
 export function InquiryForm({ id }: InquiryFormProps) {
+  const { locale, messages } = useLocale();
+  const t = messages.inquiry;
+  const dateLocale = getDateFnsLocale(locale);
+
   const [form, setForm] = useState<FormFields>(initialForm);
   const [status, setStatus] = useState<"idle" | "submitting" | "success" | "error">("idle");
 
@@ -55,6 +61,7 @@ export function InquiryForm({ id }: InquiryFormProps) {
         showingDate: format(form.showingDate, "yyyy-MM-dd"),
         preferredTime: form.preferredTime,
         message: form.message,
+        locale,
       };
       const res = await fetch("/api/inquiry", {
         method: "POST",
@@ -81,42 +88,44 @@ export function InquiryForm({ id }: InquiryFormProps) {
     <form id={id} onSubmit={handleSubmit} className="space-y-5">
       <div className="inquiry-form-grid grid grid-cols-1 gap-4">
         <div>
-          <label className={labelClass}>Name</label>
+          <label className={labelClass}>{t.name}</label>
           <input
             type="text"
             required
             value={form.name}
             onChange={update("name")}
-            placeholder="Your name"
+            placeholder={t.namePlaceholder}
             className={inputClass}
           />
         </div>
         <div>
-          <label className={labelClass}>Email</label>
+          <label className={labelClass}>{t.email}</label>
           <input
             type="email"
             required
             value={form.email}
             onChange={update("email")}
-            placeholder="your@email.com"
+            placeholder={t.emailPlaceholder}
             className={inputClass}
           />
         </div>
         <div>
-          <label className={labelClass}>Phone (optional)</label>
+          <label className={labelClass}>{t.phone}</label>
           <input
             type="tel"
             value={form.phone}
             onChange={update("phone")}
-            placeholder="Your phone number"
+            placeholder={t.phonePlaceholder}
             className={inputClass}
           />
         </div>
         <div>
-          <label className={labelClass}>Preferred showing date</label>
+          <label className={labelClass}>{t.showingDate}</label>
           <Popover>
             <PopoverTrigger className={dateTriggerClass}>
-              {form.showingDate ? format(form.showingDate, "MMM d, yyyy") : "Select date"}
+              {form.showingDate
+                ? format(form.showingDate, "PPP", { locale: dateLocale })
+                : t.selectDate}
               <CalendarIcon className="ml-2 h-4 w-4 shrink-0 opacity-60" />
             </PopoverTrigger>
             <PopoverContent className="w-auto p-0" align="start">
@@ -125,31 +134,32 @@ export function InquiryForm({ id }: InquiryFormProps) {
                 required
                 selected={form.showingDate}
                 onSelect={(date) => setForm((prev) => ({ ...prev, showingDate: date }))}
+                locale={dateLocale}
               />
             </PopoverContent>
           </Popover>
         </div>
         <div className="inquiry-form-full">
-          <label className={labelClass}>Preferred time (optional)</label>
+          <label className={labelClass}>{t.preferredTime}</label>
           <select
             value={form.preferredTime}
             onChange={update("preferredTime")}
             className={inputClass}
           >
-            <option value="">Any time</option>
-            <option value="Morning">Morning</option>
-            <option value="Afternoon">Afternoon</option>
-            <option value="Evening">Evening</option>
+            <option value="">{t.timeAny}</option>
+            <option value="Morning">{t.timeMorning}</option>
+            <option value="Afternoon">{t.timeAfternoon}</option>
+            <option value="Evening">{t.timeEvening}</option>
           </select>
         </div>
       </div>
       <div>
-        <label className={labelClass}>Message (optional)</label>
+        <label className={labelClass}>{t.message}</label>
         <textarea
           rows={3}
           value={form.message}
           onChange={update("message")}
-          placeholder="Questions about the listing or financing..."
+          placeholder={t.messagePlaceholder}
           className={inputClass + " resize-none"}
         />
       </div>
@@ -159,15 +169,13 @@ export function InquiryForm({ id }: InquiryFormProps) {
           disabled={status === "submitting" || !form.showingDate}
           className="bg-primary text-primary-foreground hover:opacity-90 cursor-pointer"
         >
-          {status === "submitting" ? "Sending..." : "Request showing"}
+          {status === "submitting" ? t.submitting : t.submit}
         </Button>
         {status === "success" && (
-          <span className="text-sm text-accent">Request sent. We&apos;ll reply shortly.</span>
+          <span className="text-sm text-accent">{t.success}</span>
         )}
         {status === "error" && (
-          <span className="text-sm text-destructive">
-            Could not send — please call the owner at 236-992-3846.
-          </span>
+          <span className="text-sm text-destructive">{t.error}</span>
         )}
       </div>
     </form>

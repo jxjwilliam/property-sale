@@ -1,13 +1,14 @@
 "use client";
 
-import { galleryGroups } from "@/config/gallery";
 import { listing } from "@/config/listing";
 import { Gallery } from "@/components/gallery";
-import { HeroPromos, HeroSalePill, HeroStats } from "@/components/hero-promo-cards";
+import { HeroPromos, HeroStats } from "@/components/hero-promo-cards";
 import { ContactBlock } from "@/components/contact-block";
 import { FaqSection } from "@/components/faq-section";
 import { InquiryForm } from "@/components/inquiry-form";
 import { PropertyMapPanel } from "@/components/property-map-panel";
+import { LocaleHeaderRow } from "@/components/locale-header-row";
+import { DocumentMetaSync, LocaleProvider, useLocale } from "@/i18n/provider";
 
 const GOOGLE_MAPS_KEY = process.env.NEXT_PUBLIC_GOOGLE_API_KEY;
 
@@ -15,23 +16,23 @@ const googleMapsEmbedUrl = GOOGLE_MAPS_KEY
   ? `https://www.google.com/maps/embed/v1/place?key=${GOOGLE_MAPS_KEY}&q=${encodeURIComponent(listing.addressShort)}`
   : `https://www.google.com/maps?q=${encodeURIComponent(listing.addressShort)}&output=embed`;
 
-export default function Home() {
+function HomeContent() {
+  const { messages, listingCopy } = useLocale();
+
   return (
     <main className="shell">
       <section className="hero" aria-label="Property listing gallery">
         <div className="title-block">
-          <HeroSalePill />
-          <p className="kicker">
-            {listing.neighbourhood} · MLS® {listing.mls} · Built {listing.yearBuilt}
-          </p>
-          <h1>Holland Park corner condo — Unit {listing.unit}</h1>
-          {listing.lede.map((paragraph) => (
+          <LocaleHeaderRow />
+          <p className="kicker">{messages.kicker}</p>
+          <h1>{messages.h1}</h1>
+          {listingCopy.lede.map((paragraph) => (
             <p key={paragraph.slice(0, 40)} className="lede">
               {paragraph}
             </p>
           ))}
           <ul className="hero-highlights" aria-label="Property highlights">
-            {listing.highlights.map((item) => (
+            {listingCopy.highlights.map((item) => (
               <li key={item}>{item}</li>
             ))}
           </ul>
@@ -40,7 +41,7 @@ export default function Home() {
           <HeroStats />
         </div>
 
-        <Gallery groups={galleryGroups} />
+        <Gallery />
       </section>
 
       <section className="inquiry-section mt-10 space-y-6">
@@ -60,10 +61,10 @@ export default function Home() {
           <div className="inquiry-card flex h-full min-h-0 flex-col rounded-2xl border border-line bg-card shadow-lg">
             <div className="inquiry-card-body">
               <p className="mb-4 text-xs uppercase tracking-[0.24em] font-bold text-accent">
-                Request a showing
+                {messages.inquiry.sectionKicker}
               </p>
               <h3 className="inquiry-card-title font-serif tracking-tight text-foreground m-0 mb-6">
-                Send a showing request
+                {messages.inquiry.sectionTitle}
               </h3>
               <InquiryForm id="inquiry-form" />
               <ContactBlock />
@@ -74,5 +75,14 @@ export default function Home() {
         <FaqSection />
       </section>
     </main>
+  );
+}
+
+export default function Home() {
+  return (
+    <LocaleProvider>
+      <DocumentMetaSync />
+      <HomeContent />
+    </LocaleProvider>
   );
 }

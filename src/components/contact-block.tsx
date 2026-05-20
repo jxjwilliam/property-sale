@@ -1,4 +1,7 @@
+"use client";
+
 import { listing } from "@/config/listing";
+import { useLocale } from "@/i18n/provider";
 
 function ContactLine({
   href,
@@ -35,12 +38,13 @@ function ContactCell({
 }
 
 export function ContactBlock() {
+  const { messages } = useLocale();
   const { primaryAgent } = listing;
   const teamAgent = listing.agents[0];
 
   return (
-    <div className="contact-grid" aria-label="Contact">
-      <ContactCell label={primaryAgent.title}>
+    <div className="contact-grid" aria-label={messages.contact.ariaLabel}>
+      <ContactCell label={messages.contact.listingAgent}>
         <p className="text-sm text-foreground mt-1 font-medium">{primaryAgent.name}</p>
         <p className="text-sm text-muted-foreground">{primaryAgent.brokerage}</p>
         <ContactLine href={`tel:${primaryAgent.phoneTel}`}>{primaryAgent.phone}</ContactLine>
@@ -48,7 +52,7 @@ export function ContactBlock() {
       </ContactCell>
 
       {teamAgent ? (
-        <ContactCell label="Team" labelClassName="text-muted-foreground">
+        <ContactCell label={messages.contact.team} labelClassName="text-muted-foreground">
           <p className="text-sm text-foreground mt-1">{teamAgent.name}</p>
           <p className="text-sm text-muted-foreground">{teamAgent.brokerage}</p>
           <ContactLine href={`tel:${teamAgent.phoneTel}`}>{teamAgent.phone}</ContactLine>

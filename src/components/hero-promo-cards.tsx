@@ -1,3 +1,5 @@
+"use client";
+
 import {
   BedDouble,
   Rotate3d,
@@ -5,17 +7,16 @@ import {
   CircleDollarSign,
   Hash,
   Maximize2,
-  Tag,
   type LucideIcon,
 } from "lucide-react";
-import { statsData } from "@/config/gallery";
 import { listing } from "@/config/listing";
+import { useLocale } from "@/i18n/provider";
 
 const STAT_ICONS: Record<string, LucideIcon> = {
-  "Asking price": CircleDollarSign,
-  "Beds · baths": BedDouble,
-  Interior: Maximize2,
-  "Listing ID": Hash,
+  askingPrice: CircleDollarSign,
+  bedsBaths: BedDouble,
+  interior: Maximize2,
+  listingId: Hash,
 };
 
 function HeroIconBox({
@@ -76,34 +77,28 @@ function PromoCard({
   return <div className="promo-card">{body}</div>;
 }
 
-export function HeroSalePill() {
-  return (
-    <span className="sale-pill">
-      <Tag size={12} strokeWidth={2} aria-hidden="true" />
-      For sale
-    </span>
-  );
-}
-
 export function HeroPromos() {
+  const { messages } = useLocale();
+  const p = messages.promos;
+
   return (
     <div className="hero-promos mt-6 grid gap-3">
       <PromoCard
         href="#inquiry-form"
         icon={CalendarCheck}
-        title="Request a showing"
-        description="Schedule a private walkthrough."
+        title={p.showingTitle}
+        description={p.showingDesc}
       />
       <PromoCard
         icon={CircleDollarSign}
         title={listing.price}
-        description={`${listing.status} · Strata ${listing.strataFee}`}
+        description={p.statusLine}
       />
       <PromoCard
         href={listing.matterportUrl}
         icon={Rotate3d}
-        title="Virtual tour"
-        description="Matterport 3D walkthrough"
+        title={p.virtualTourTitle}
+        description={p.virtualTourDesc}
         external
       />
     </div>
@@ -111,12 +106,22 @@ export function HeroPromos() {
 }
 
 export function HeroStats() {
+  const { messages } = useLocale();
+  const s = messages.stats;
+
+  const stats = [
+    { key: "askingPrice", value: listing.price, label: s.askingPrice },
+    { key: "bedsBaths", value: `${listing.beds} + ${listing.baths}`, label: s.bedsBaths },
+    { key: "interior", value: `${listing.sqft} sq ft`, label: s.interior },
+    { key: "listingId", value: `MLS® ${listing.mls}`, label: s.listingId },
+  ];
+
   return (
     <div className="stats">
-      {statsData.map((stat) => {
-        const Icon = STAT_ICONS[stat.label] ?? Hash;
+      {stats.map((stat) => {
+        const Icon = STAT_ICONS[stat.key] ?? Hash;
         return (
-          <div key={stat.label} className="stat">
+          <div key={stat.key} className="stat">
             <HeroIconBox icon={Icon} className="stat-icon" />
             <div className="stat-body">
               <strong>{stat.value}</strong>

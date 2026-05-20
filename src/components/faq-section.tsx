@@ -1,23 +1,27 @@
-import { buyerFaq } from "@/config/faq";
+"use client";
+
+import { useLocale } from "@/i18n/provider";
 
 export function FaqSection() {
+  const { faqCopy } = useLocale();
+
   return (
     <section className="faq-section" aria-labelledby="buyer-faq-heading">
       <div className="faq-section-header">
         <p className="text-xs uppercase tracking-[0.24em] font-bold text-primary">
-          Buyer questions
+          {faqCopy.kicker}
         </p>
-        <h2 id="buyer-faq-heading" className="font-serif text-2xl sm:text-3xl tracking-tight text-foreground m-0">
-          Frequently asked questions
+        <h2
+          id="buyer-faq-heading"
+          className="font-serif text-2xl sm:text-3xl tracking-tight text-foreground m-0"
+        >
+          {faqCopy.title}
         </h2>
-        <p className="text-sm text-muted-foreground m-0 max-w-2xl">
-          Common topics for this Surrey City Centre condo sale—pricing, strata, location, and BC
-          purchase basics. Not legal or tax advice.
-        </p>
+        <p className="text-sm text-muted-foreground m-0 max-w-2xl">{faqCopy.intro}</p>
       </div>
 
       <div className="faq-list">
-        {buyerFaq.map((item) => (
+        {faqCopy.items.map((item) => (
           <details key={item.id} className="faq-item">
             <summary className="faq-question">{item.question}</summary>
             <div className="faq-answer">

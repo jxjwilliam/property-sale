@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Libre_Baskerville, Poppins } from "next/font/google";
+import { Libre_Baskerville, Noto_Sans_SC, Poppins } from "next/font/google";
 import { listing } from "@/config/listing";
 import "./globals.css";
 
@@ -13,6 +13,12 @@ const libreBaskerville = Libre_Baskerville({
   subsets: ["latin"],
   weight: ["400", "700"],
   variable: "--font-serif-family",
+});
+
+const notoSansSc = Noto_Sans_SC({
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
+  variable: "--font-cjk-family",
 });
 
 export const metadata: Metadata = {
@@ -37,7 +43,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`dark h-full antialiased ${poppins.variable} ${libreBaskerville.variable}`}
+      className={`dark h-full antialiased ${poppins.variable} ${libreBaskerville.variable} ${notoSansSc.variable}`}
       suppressHydrationWarning
     >
       <body className="min-h-full font-sans" suppressHydrationWarning>

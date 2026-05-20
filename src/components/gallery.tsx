@@ -1,23 +1,20 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
-import type { GalleryGroup } from "@/config/gallery";
-import { getFilteredItems, getGroup } from "@/config/gallery";
-import { FilterBar } from "./filter-bar";
+import { getFilteredItems } from "@/config/gallery";
+import { useLocale } from "@/i18n/provider";
 import { Filmstrip } from "./filmstrip";
 import { HeroViewer } from "./hero-viewer";
 
-interface GalleryProps {
-  groups: GalleryGroup[];
-}
+export function Gallery() {
+  const { messages, format } = useLocale();
+  const g = messages.gallery;
 
-export function Gallery({ groups }: GalleryProps) {
-  const [filterKey, setFilterKey] = useState("all");
   const [currentIndex, setCurrentIndex] = useState(0);
   const [playing, setPlaying] = useState(true);
   const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
-  const items = getFilteredItems(filterKey);
+  const items = getFilteredItems("all");
 
   const step = useCallback(
     (delta: number) => {
@@ -39,11 +36,6 @@ export function Gallery({ groups }: GalleryProps) {
     if (!playing) return;
     timerRef.current = setInterval(() => step(1), 5000);
   }, [clearTimer, playing, step]);
-
-  const handleFilterChange = useCallback((key: string) => {
-    setFilterKey(key);
-    setCurrentIndex(0);
-  }, []);
 
   const handlePrev = useCallback(() => {
     step(-1);
@@ -70,7 +62,7 @@ export function Gallery({ groups }: GalleryProps) {
   useEffect(() => {
     startTimer();
     return clearTimer;
-  }, [filterKey, playing, startTimer, clearTimer]);
+  }, [playing, startTimer, clearTimer]);
 
   useEffect(() => {
     const handleVisibility = () => {
@@ -83,6 +75,14 @@ export function Gallery({ groups }: GalleryProps) {
     document.addEventListener("visibilitychange", handleVisibility);
     return () => document.removeEventListener("visibilitychange", handleVisibility);
   }, [playing, clearTimer, startTimer]);
+
+  const counter =
+    items.length > 0
+      ? format(g.slideCounter, {
+          current: String(currentIndex + 1).padStart(2, "0"),
+          total: String(items.length).padStart(2, "0"),
+        })
+      : "0 / 0";
 
   return (
     <aside className="panel" aria-label="Current slide preview">
@@ -98,23 +98,16 @@ export function Gallery({ groups }: GalleryProps) {
       />
 
       <div className="status-row">
-        <span className="badge">
-          {items.length ? `${String(currentIndex + 1).padStart(2, "0")} / ${String(items.length).padStart(2, "0")}` : "0 / 0"}
-        </span>
-        <span className="badge">{`${getGroup(filterKey).label} frames`}</span>
-        <span className="badge">Tap a frame to jump</span>
-      </div>
-
-      <div className="filter-bar" id="filterBar" aria-label="Gallery filters">
-        <FilterBar groups={groups} activeKey={filterKey} onFilterChange={handleFilterChange} />
+        <span className="badge">{counter}</span>
+        <span className="badge">{g.tapToJump}</span>
       </div>
 
       <section aria-label="Frame carousel">
         <div className="section-head">
           <div>
-            <h2>Carousel frames</h2>
+            <h2>{g.carouselTitle}</h2>
           </div>
-          <p>Swipe horizontally, click any frame, or use the arrow keys. The active image stays large and centered.</p>
+          <p>{g.carouselHint}</p>
         </div>
         <Filmstrip items={items} activeIndex={currentIndex} onSelect={handleSelect} />
       </section>

@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 import type { GalleryImage } from "@/config/gallery";
+import { useLocale } from "@/i18n/provider";
 
 interface HeroViewerProps {
   items: GalleryImage[];
@@ -24,6 +25,7 @@ export function HeroViewer({
   onPause,
   onResume,
 }: HeroViewerProps) {
+  const { messages } = useLocale();
   const frameRef = useRef<HTMLDivElement>(null);
   const switchingRef = useRef(false);
   const [brokenUrl, setBrokenUrl] = useState<string | null>(null);
@@ -93,7 +95,7 @@ export function HeroViewer({
   if (!current) {
     return (
       <div className="hero-frame flex items-center justify-center">
-        <p className="text-muted-foreground">No images found.</p>
+        <p className="text-muted-foreground">{messages.gallery.noImages}</p>
       </div>
     );
   }
@@ -102,7 +104,7 @@ export function HeroViewer({
     <div className="hero-frame">
       <div className="hero-frame-inner" ref={frameRef}>
         {isBroken ? (
-          <div className="hero-placeholder">Photo unavailable</div>
+          <div className="hero-placeholder">{messages.gallery.photoUnavailable}</div>
         ) : (
           <img
             key={current.url}
