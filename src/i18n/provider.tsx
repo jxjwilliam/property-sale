@@ -34,14 +34,14 @@ type LocaleContextValue = {
 const LocaleContext = createContext<LocaleContextValue | null>(null);
 
 function readStoredLocale(): Locale {
-  if (typeof window === "undefined") return "en";
+  if (typeof window === "undefined") return "zh-Hans";
   const stored = localStorage.getItem(STORAGE_KEY);
   if (isLocale(stored)) return stored;
   const match = document.cookie
     .split("; ")
     .find((row) => row.startsWith(`${STORAGE_KEY}=`))
     ?.split("=")[1];
-  return isLocale(match) ? match : "en";
+  return isLocale(match) ? match : "zh-Hans";
 }
 
 function persistLocale(locale: Locale) {
