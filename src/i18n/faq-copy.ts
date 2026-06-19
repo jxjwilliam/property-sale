@@ -163,7 +163,7 @@ const faqByLocale: Record<Locale, FaqCopy> = {
         id: "new-never-occupied",
         question: "是新房吗？是否有人入住过？",
         answer:
-          "Holland Park by Century City 约建于 2025 年。营销资料称本转角单位为全新、从未入住，配备现代装修、空调、室内洗衣及通高落地窗。",
+          "Holland Park by Century City 约建于 2025 年。营销资料称本全新豪华单位为全新、从未入住，配备现代装修、空调、室内洗衣及通高落地窗。",
       },
       {
         id: "pets-rentals",

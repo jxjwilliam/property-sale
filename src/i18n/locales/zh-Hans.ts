@@ -3,11 +3,11 @@ import type { Messages } from "../types";
 export const zhHans: Messages = {
   meta: {
     title: "808-13573 98A Ave，素里 — $649,900 | MLS R3109998",
-    description: "荷兰公园 Century City 转角公寓，2卧2卫，829平方英尺，MLS® R3109998。",
+    description: "荷兰公园 Century City 豪华公寓，2卧2卫，829平方英尺，MLS® R3109998。",
   },
   salePill: "出售",
   kicker: "惠利 · 素里市中心 · MLS® R3109998 · 2025年落成",
-  h1: "荷兰公园转角公寓 — 808单元",
+  h1: "荷兰公园全新豪华公寓 — 808单元",
   contact: {
     listingAgent: "挂牌经纪",
     team: "团队",
